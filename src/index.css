@@ -4,20 +4,19 @@
 
 @layer base {
   html {
-    /* Fontun tarayıcıda en keskin ve hatasız görünmesini sağlar */
+   
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
   body {
-    /* Varsayılan fontu Montserrat yapıyoruz */
+   /
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* Başlıklarda harflerin birbirine binmesini (kerning hatasını) önleyelim */
   h1, h2, h3, .font-bold {
-    letter-spacing: 0.02em; /* Harf arasını milimetrik açar */
+    letter-spacing: 0.02em; 
     font-feature-settings: "lnum", "pnum", "kern";
   }
 }

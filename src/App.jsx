@@ -243,9 +243,9 @@ export default function App() {
             <div className="h-[2px] w-20 bg-red-600"></div>
           </div>
          
-          <h1 className="text-6xl md:text-8xl font-black uppercase leading-none tracking-tight mb-12">
+          <h1 className="text-6xl md:text-8xl font-black uppercase leading-none tracking-normal mb-12">
             <span className="text-white block">{content.hero.line1}</span>
-            <span className="text-transparent" style={{ WebkitTextStroke: '2px white' }}>
+            <span className="text-transparent" style={{ WebkitTextStroke: '1px white', letterSpacing: '0.05em' }}>
               {content.hero.line2}
             </span>
           </h1>

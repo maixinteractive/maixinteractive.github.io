@@ -243,16 +243,15 @@ export default function App() {
             <div className="h-[2px] w-20 bg-red-600"></div>
           </div>
          
-<h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.8] mb-12 flex flex-col">
-  <span className="text-white">{content.hero.line1}</span>
+<h1 className="text-6xl md:text-8xl uppercase leading-[0.85] mb-12 flex flex-col">
+  <span className="text-white font-black">{content.hero.line1}</span>
   
-  {/* Harflerin arasını ciddi şekilde açıyoruz ve stroke'u inceltiyoruz */}
   <span 
-    className="text-transparent" 
+    className="text-transparent font-bold" 
     style={{ 
-      WebkitTextStroke: '0.8px white', 
-      letterSpacing: '0.15em', /* Harfler arasına geniş boşluk */
-      marginTop: '0.1em'      /* Üstteki satıra binmemesi için */
+      WebkitTextStroke: '1px white', 
+      letterSpacing: '0.2em', 
+      marginTop: '0.2em'
     }}
   >
     {content.hero.line2}

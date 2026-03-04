@@ -13,7 +13,6 @@ export default function App() {
       nav: [
         { id: "vision", text: "VISION" },
         { id: "apps", text: "APPS" },
-        { id: "games", text: "GAMES" },
         { id: "support", text: "SUPPORT" }
       ],
       hero: {
@@ -28,10 +27,9 @@ export default function App() {
       },
       projects: {
         appsTitle: "APPS",
-        gamesTitle: "GAMES",
         card1: {
           title: "SubVex",
-          status: "COMING SOON"
+          status: "AVAILABLE ON GOOGLE PLAY"
         },
         card2: {
           title: "Fisle",
@@ -85,7 +83,6 @@ export default function App() {
       nav: [
         { id: "vision", text: "VİZYON" },
         { id: "apps", text: "UYGULAMALAR" },
-        { id: "games", text: "OYUNLAR" },
         { id: "support", text: "DESTEK" }
       ],
       hero: {
@@ -100,13 +97,12 @@ export default function App() {
       },
       projects: {
         appsTitle: "UYGULAMALAR",
-        gamesTitle: "OYUNLAR",
         card1: {
           title: "SubVex",
-          status: "ÇOK YAKINDA"
+          status: "GOOGLE PLAY'DE YAYINDA"
         },
         card2: {
-          title: "The Edge of the Mind",
+          title: "Fisle",
           status: "ÇOK YAKINDA"
         }
       },
@@ -164,10 +160,9 @@ export default function App() {
 
   const yHero = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-  // Ortak Kart Bileşeni
-  const ProjectCard = ({ title, status, sectionTitle }) => (
-    <div className="flex flex-col h-full">
-      <h3 className="text-white font-bold tracking-widest uppercase mb-4 ml-1">{sectionTitle}</h3>
+  // Ortak Kart Bileşeni - Link eklendi
+  const ProjectCard = ({ title, status, sectionTitle, link }) => {
+    const CardBody = (
       <motion.div
         whileHover={{ scale: 1.02 }}
         className="group relative h-[350px] bg-[#0a0a0a] rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-red-600/50 transition-all duration-500 shadow-[0_0_0px_rgba(220,38,38,0)] hover:shadow-[0_0_30px_-5px_rgba(220,38,38,0.6)]"
@@ -185,8 +180,21 @@ export default function App() {
           <p className="text-gray-500 tracking-widest text-xs uppercase mt-1">{status}</p>
         </div>
       </motion.div>
-    </div>
-  );
+    );
+
+    return (
+      <div className="flex flex-col h-full">
+        <h3 className="text-white font-bold tracking-widest uppercase mb-4 ml-1">{sectionTitle}</h3>
+        {link ? (
+          <a href={link} target="_blank" rel="noopener noreferrer" className="block h-full">
+            {CardBody}
+          </a>
+        ) : (
+          CardBody
+        )}
+      </div>
+    );
+  };
 
   return (
     <div ref={containerRef} className="relative min-h-screen bg-black text-white overflow-hidden font-sans selection:bg-red-600 selection:text-white scroll-smooth">
@@ -268,7 +276,7 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* Orta Kısım: Vision, Apps ve Games Grid */}
+      {/* Orta Kısım: Vision ve Apps Grid */}
       <section className="py-20 px-8 md:px-16 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
           
@@ -285,12 +293,13 @@ export default function App() {
                   sectionTitle={content.projects.appsTitle}
                   title={content.projects.card1.title}
                   status={content.projects.card1.status}
+                  link="https://play.google.com/store/apps/details?id=com.maixinteractivedev.subvex"
                 />
               </div>
 
-              <div id="games" className="scroll-mt-32">
+              <div className="scroll-mt-32 mt-0 md:mt-0">
                 <ProjectCard 
-                  sectionTitle={content.projects.gamesTitle}
+                  sectionTitle={content.projects.appsTitle}
                   title={content.projects.card2.title}
                   status={content.projects.card2.status}
                 />

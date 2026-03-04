@@ -34,7 +34,7 @@ export default function App() {
           status: "COMING SOON"
         },
         card2: {
-          title: "The Edge of the Mind",
+          title: "Fisle",
           status: "COMING SOON"
         }
       },

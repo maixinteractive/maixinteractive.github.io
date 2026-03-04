@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import mxLogo from "./assets/mx.png"; 
+// Resmi buradan içe aktarıyoruz (uzantısı farklıysa .png kısmını değiştirmeyi unutma)
+import subvexImg from "./assets/subvex.jpeg"; 
 
 export default function App() {
   const containerRef = useRef(null);
@@ -160,22 +162,38 @@ export default function App() {
 
   const yHero = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-  // Ortak Kart Bileşeni - Link eklendi
-  const ProjectCard = ({ title, status, sectionTitle, link }) => {
+  // Ortak Kart Bileşeni - image prop'u eklendi
+  const ProjectCard = ({ title, status, sectionTitle, link, image }) => {
     const CardBody = (
       <motion.div
         whileHover={{ scale: 1.02 }}
         className="group relative h-[350px] bg-[#0a0a0a] rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-red-600/50 transition-all duration-500 shadow-[0_0_0px_rgba(220,38,38,0)] hover:shadow-[0_0_30px_-5px_rgba(220,38,38,0.6)]"
       >
-        <div className="h-2/3 bg-gradient-to-b from-black/80 to-[#111] relative flex items-center justify-center overflow-hidden">
-           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle,transparent_20%,#000_100%)]" style={{backgroundImage: 'repeating-conic-gradient(#ffffff10 0deg 10deg, #00000000 10deg 20deg)'}}></div>
+        {/* Görsel veya arka plan rengi alanı */}
+        <div 
+          className="h-2/3 relative flex items-center justify-center overflow-hidden"
+          style={image ? {
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          } : {}}
+        >
+           {/* Görsel yoksa varsayılan degradeyi göster */}
+           {!image && (
+             <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-[#111]">
+               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle,transparent_20%,#000_100%)]" style={{backgroundImage: 'repeating-conic-gradient(#ffffff10 0deg 10deg, #00000000 10deg 20deg)'}}></div>
+             </div>
+           )}
+
+           {/* Üzerindeki yazının (Status) okunabilmesi için hafif bir karartma efekti eklendi */}
+           {image && <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500"></div>}
            
-           <div className="border-2 border-white/30 text-white/50 font-bold tracking-[0.2em] px-6 py-2 -rotate-12 backdrop-blur-sm uppercase text-sm group-hover:text-red-500/80 group-hover:border-red-500/50 transition-colors duration-500">
+           <div className="relative z-10 border-2 border-white/30 text-white/50 font-bold tracking-[0.2em] px-6 py-2 -rotate-12 backdrop-blur-sm uppercase text-sm group-hover:text-red-500/80 group-hover:border-red-500/50 transition-colors duration-500">
              {status}
            </div>
         </div>
 
-        <div className="h-1/3 p-6 flex flex-col justify-end bg-[#0f0f0f] relative z-10">
+        <div className="h-1/3 p-6 flex flex-col justify-end bg-[#0f0f0f] relative z-20">
           <h4 className="text-2xl font-black uppercase tracking-wide text-white group-hover:text-red-500 transition-colors duration-300">{title}</h4>
           <p className="text-gray-500 tracking-widest text-xs uppercase mt-1">{status}</p>
         </div>
@@ -294,6 +312,7 @@ export default function App() {
                   title={content.projects.card1.title}
                   status={content.projects.card1.status}
                   link="https://play.google.com/store/apps/details?id=com.maixinteractivedev.subvex"
+                  image={subvexImg} // <--- Resmi buraya prop olarak geçiyoruz
                 />
               </div>
 

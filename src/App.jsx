@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import mxLogo from "./assets/mx.png"; 
-// Resmi buradan içe aktarıyoruz (uzantısı farklıysa .png kısmını değiştirmeyi unutma)
 import subvexImg from "./assets/subvex.jpeg"; 
 
 export default function App() {

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maixinteractive.github.io/sitemap.xml
+Sitemap: https://maixinteractive.github.io/sitemap1.xml

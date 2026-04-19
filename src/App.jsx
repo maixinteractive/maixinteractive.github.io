@@ -1,5 +1,5 @@
 import { AnimatePresence, motion as Motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import mxLogo from "./assets/mx.png";
 import subvexLogo from "./assets/SubVex.png";
 import SubvexPage from "./SubvexPage";
@@ -213,11 +213,17 @@ function SubvexWord({ className = "" }) {
   );
 }
 
-function HomePage({ lang, setLang, onOpenSubvex }) {
+function HomePage({ lang, setLang }) {
   const content = HOME_CONTENT[lang];
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const reduce = useReducedMotion();
+  const homeHref = BASE_URL;
+  const subvexHref = `${BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`}subvex/`;
+  const socialLinks = {
+    instagram: "https://www.instagram.com/maixinteractive/?hl=en",
+    tiktok: "https://www.tiktok.com/@maixinteractive"
+  };
 
   const pageRef = useRef(null);
   const heroRef = useRef(null);
@@ -234,8 +240,17 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
     document.title = content.seo.title;
     upsertMeta('meta[name="description"]', { name: "description", content: content.seo.description });
     upsertMeta('meta[name="keywords"]', { name: "keywords", content: content.seo.keywords });
+    upsertMeta('meta[name="robots"]', { name: "robots", content: "index,follow,max-image-preview:large" });
+    upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
+    upsertMeta('meta[property="og:site_name"]', { property: "og:site_name", content: "MAIX Interactive" });
+    upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonicalHref });
     upsertMeta('meta[property="og:title"]', { property: "og:title", content: content.seo.title });
     upsertMeta('meta[property="og:description"]', { property: "og:description", content: content.seo.description });
+    upsertMeta('meta[property="og:image"]', { property: "og:image", content: `${window.location.origin}/favicon.png` });
+    upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
+    upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: content.seo.title });
+    upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: content.seo.description });
+    upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: `${window.location.origin}/favicon.png` });
     upsertCanonical(canonicalHref);
   }, [content.seo]);
 
@@ -272,19 +287,18 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
               : "rounded-2xl border border-transparent bg-transparent"
           }`}
         >
-          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="text-left">
+          <a href={homeHref} className="text-left">
             <p className="text-2xl font-black tracking-[0.16em] text-[#dfe8ff] md:text-3xl">MAIX</p>
             <p className="text-[10px] tracking-[0.34em] text-[#c2d2fb]/55">INTERACTIVE</p>
-          </button>
+          </a>
 
           <nav className="hidden items-center gap-9 text-xs uppercase tracking-[0.2em] text-[#dbe7ff]/82 md:flex">
             <a href="#vision" className="transition-colors hover:text-white">{content.nav.vision}</a>
             <a href="#products" className="transition-colors hover:text-white">{content.nav.products}</a>
             <a href="#support" className="transition-colors hover:text-white">{content.nav.support}</a>
-            <button
-              type="button"
-              onClick={onOpenSubvex}
-              className="rounded-full border border-[#7f9cd4]/40 bg-[#15233f]/66 px-4 py-2 text-[11px] tracking-[0.18em] text-[#e6eeff] transition-colors hover:border-[#9eb6e6]/58 hover:bg-[#1f3258]/72"
+            <a
+              href={subvexHref}
+              className="inline-flex items-center justify-center rounded-full border border-[#7f9cd4]/40 bg-[#15233f]/66 px-4 py-2 text-[11px] leading-none tracking-[0.18em] text-[#e6eeff] transition-colors hover:border-[#9eb6e6]/58 hover:bg-[#1f3258]/72"
             >
               {lang === "tr" ? (
                 <>
@@ -295,7 +309,7 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
                   Explore <SubvexWord />
                 </>
               )}
-            </button>
+            </a>
           </nav>
 
           <div className="rounded-full border border-[#7895cb]/32 bg-[#091327]/72 px-3 py-1 text-xs tracking-[0.14em] text-[#d1dfff]/78 backdrop-blur-md">
@@ -327,12 +341,12 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
               {content.hero.subtitle}
             </Motion.p>
 
-            <Motion.button
+            <Motion.a
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduce ? 0 : 0.82, delay: 0.14, ease: EASE }}
-              onClick={onOpenSubvex}
-              className="mt-11 rounded-full border border-[#89a6d9]/44 bg-[#1a2d51]/72 px-8 py-3 text-sm uppercase tracking-[0.18em] text-[#edf3ff] transition-colors duration-300 hover:border-[#a8bfe7]/60 hover:bg-[#243d69]/80"
+              href={subvexHref}
+              className="mt-11 inline-flex items-center justify-center rounded-full border border-[#89a6d9]/44 bg-[#1a2d51]/72 px-8 py-3 text-sm uppercase leading-none tracking-[0.18em] text-[#edf3ff] transition-colors duration-300 hover:border-[#a8bfe7]/60 hover:bg-[#243d69]/80"
             >
               {lang === "tr" ? (
                 <>
@@ -343,7 +357,7 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
                   Explore <SubvexWord />
                 </>
               )}
-            </Motion.button>
+            </Motion.a>
           </Motion.div>
         </section>
 
@@ -386,13 +400,12 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
                   <SubvexWord />
                 </h3>
                 <p className="mt-5 max-w-md text-[#dde7ff]/88">{content.products.cardText}</p>
-                <button
-                  type="button"
-                  onClick={onOpenSubvex}
-                  className="mt-10 rounded-full border border-[#84a0d2]/38 bg-[#152a4b]/72 px-6 py-3 text-xs uppercase tracking-[0.18em] text-[#e7efff] transition-colors duration-300 hover:border-[#a8bee5]/58 hover:bg-[#203b67]/80"
+                <a
+                  href={subvexHref}
+                  className="mt-10 inline-flex items-center justify-center rounded-full border border-[#84a0d2]/38 bg-[#152a4b]/72 px-6 py-3 text-xs uppercase leading-none tracking-[0.18em] text-[#e7efff] transition-colors duration-300 hover:border-[#a8bee5]/58 hover:bg-[#203b67]/80"
                 >
                   {content.products.cta}
-                </button>
+                </a>
               </div>
               <div className="relative min-h-[310px] border-t border-[#7998cc]/18 md:border-l md:border-t-0">
                 <div className="absolute inset-0 bg-[radial-gradient(105%_90%_at_74%_22%,rgba(79,117,186,0.24),transparent_62%),linear-gradient(170deg,#070f1d,#0b1730_58%,#0b1b36)]" />
@@ -426,13 +439,33 @@ function HomePage({ lang, setLang, onOpenSubvex }) {
       <footer className="relative z-10 border-t border-[#7f95bf]/16 px-6 py-8 md:px-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-xs uppercase tracking-[0.18em] text-[#b7c8ea]/48">© MAIX INTERACTIVE</p>
-          <button
-            type="button"
-            onClick={() => setIsPrivacyOpen(true)}
-            className="text-xs uppercase tracking-[0.18em] text-[#b7c8ea]/52 transition-colors hover:text-[#dbe8ff]"
-          >
-            {content.footer.privacy}
-          </button>
+          <div className="flex items-center gap-5 text-xs uppercase tracking-[0.16em] text-[#b7c8ea]/56">
+            <a
+              href={socialLinks.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="MAIX Interactive Instagram"
+              className="transition-colors hover:text-[#dbe8ff]"
+            >
+              Instagram
+            </a>
+            <a
+              href={socialLinks.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="MAIX Interactive TikTok"
+              className="transition-colors hover:text-[#dbe8ff]"
+            >
+              TikTok
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsPrivacyOpen(true)}
+              className="text-xs uppercase tracking-[0.18em] text-[#b7c8ea]/52 transition-colors hover:text-[#dbe8ff]"
+            >
+              {content.footer.privacy}
+            </button>
+          </div>
         </div>
       </footer>
 
@@ -486,40 +519,17 @@ export default function App() {
   const [lang, setLang] = useState("tr");
   const [route, setRoute] = useState(() => getRoute());
 
-  const paths = useMemo(
-    () => ({
-      home: BASE_URL,
-      subvex: `${BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`}subvex`
-    }),
-    []
-  );
-
   useEffect(() => {
     const onPop = () => setRoute(getRoute());
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
 
-  const navigate = (nextRoute) => {
-    if (nextRoute === "subvex") {
-      const target = `${BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`}subvex/`;
-      window.location.href = target;
-      return;
-    }
-
-    const target = nextRoute === "subvex" ? paths.subvex : paths.home;
-    if (window.location.pathname !== target) {
-      window.history.pushState({}, "", target);
-    }
-    setRoute(nextRoute);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   if (route === "subvex") {
-    return <SubvexPage lang={lang} setLang={setLang} onNavigateHome={() => navigate("home")} />;
+    return <SubvexPage lang={lang} setLang={setLang} />;
   }
 
-  return <HomePage lang={lang} setLang={setLang} onOpenSubvex={() => navigate("subvex")} />;
+  return <HomePage lang={lang} setLang={setLang} />;
 }
 
 

@@ -179,18 +179,33 @@ function SubvexWord({ className = "" }) {
   );
 }
 
-export default function SubvexPage({ lang, setLang, onNavigateHome }) {
+export default function SubvexPage({ lang, setLang }) {
   const content = SUBVEX_CONTENT[lang];
   const reduce = useReducedMotion();
   const [isScrolled, setIsScrolled] = useState(false);
+  const homeHref = "/";
+  const socialLinks = {
+    instagram: "https://www.instagram.com/maixinteractive/?hl=en",
+    tiktok: "https://www.tiktok.com/@maixinteractive"
+  };
 
   useEffect(() => {
+    const canonicalHref = `${window.location.origin}/subvex/`;
     document.title = content.seo.title;
     upsertMeta('meta[name="description"]', { name: "description", content: content.seo.description });
     upsertMeta('meta[name="keywords"]', { name: "keywords", content: content.seo.keywords });
+    upsertMeta('meta[name="robots"]', { name: "robots", content: "index,follow,max-image-preview:large" });
+    upsertMeta('meta[property="og:type"]', { property: "og:type", content: "website" });
+    upsertMeta('meta[property="og:site_name"]', { property: "og:site_name", content: "MAIX Interactive" });
+    upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonicalHref });
     upsertMeta('meta[property="og:title"]', { property: "og:title", content: content.seo.title });
     upsertMeta('meta[property="og:description"]', { property: "og:description", content: content.seo.description });
-    upsertCanonical(`${window.location.origin}/subvex/`);
+    upsertMeta('meta[property="og:image"]', { property: "og:image", content: `${window.location.origin}/favicon.png` });
+    upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
+    upsertMeta('meta[name="twitter:title"]', { name: "twitter:title", content: content.seo.title });
+    upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: content.seo.description });
+    upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: `${window.location.origin}/favicon.png` });
+    upsertCanonical(canonicalHref);
   }, [content.seo]);
 
   useEffect(() => {
@@ -219,13 +234,13 @@ export default function SubvexPage({ lang, setLang, onNavigateHome }) {
               : "rounded-2xl border border-transparent bg-transparent"
           }`}
         >
-          <button type="button" onClick={onNavigateHome} className="text-left">
+          <a href={homeHref} className="text-left">
             <p className="text-2xl font-black tracking-[0.16em] text-[#dfe8ff] md:text-3xl">MAIX</p>
             <p className="text-[10px] tracking-[0.34em] text-[#c2d2fb]/55">INTERACTIVE</p>
-          </button>
+          </a>
 
           <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.2em] text-[#dbe7ff]/82 md:flex">
-            <button type="button" onClick={onNavigateHome} className="transition-colors hover:text-white">{content.nav.home}</button>
+            <a href={homeHref} className="transition-colors hover:text-white">{content.nav.home}</a>
             <a href="#features" className="transition-colors hover:text-white">{content.nav.features}</a>
             <a href="#faq" className="transition-colors hover:text-white">{content.nav.faq}</a>
           </nav>
@@ -384,6 +399,32 @@ export default function SubvexPage({ lang, setLang, onNavigateHome }) {
           </div>
         </section>
       </main>
+
+      <footer className="relative z-10 border-t border-[#7f95bf]/16 px-6 py-8 md:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#b7c8ea]/48">© MAIX INTERACTIVE</p>
+          <div className="flex items-center gap-5 text-xs uppercase tracking-[0.16em] text-[#b7c8ea]/56">
+            <a
+              href={socialLinks.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="MAIX Interactive Instagram"
+              className="transition-colors hover:text-[#dbe8ff]"
+            >
+              Instagram
+            </a>
+            <a
+              href={socialLinks.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="MAIX Interactive TikTok"
+              className="transition-colors hover:text-[#dbe8ff]"
+            >
+              TikTok
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

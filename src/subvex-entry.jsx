@@ -11,9 +11,6 @@ function Root() {
     <SubvexPage
       lang={lang}
       setLang={setLang}
-      onNavigateHome={() => {
-        window.location.href = "/";
-      }}
     />
   );
 }

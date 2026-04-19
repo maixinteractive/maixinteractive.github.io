@@ -160,6 +160,16 @@ function upsertMeta(selector, attrs) {
   el.setAttribute("content", attrs.content);
 }
 
+function upsertCanonical(href) {
+  let link = document.head.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", "canonical");
+    document.head.appendChild(link);
+  }
+  link.setAttribute("href", href);
+}
+
 function SubvexWord({ className = "" }) {
   return (
     <span className={className}>
@@ -180,6 +190,7 @@ export default function SubvexPage({ lang, setLang, onNavigateHome }) {
     upsertMeta('meta[name="keywords"]', { name: "keywords", content: content.seo.keywords });
     upsertMeta('meta[property="og:title"]', { property: "og:title", content: content.seo.title });
     upsertMeta('meta[property="og:description"]', { property: "og:description", content: content.seo.description });
+    upsertCanonical(`${window.location.origin}/subvex/`);
   }, [content.seo]);
 
   useEffect(() => {

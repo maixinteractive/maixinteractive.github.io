@@ -501,6 +501,12 @@ export default function App() {
   }, []);
 
   const navigate = (nextRoute) => {
+    if (nextRoute === "subvex") {
+      const target = `${BASE_URL.endsWith("/") ? BASE_URL : `${BASE_URL}/`}subvex/`;
+      window.location.href = target;
+      return;
+    }
+
     const target = nextRoute === "subvex" ? paths.subvex : paths.home;
     if (window.location.pathname !== target) {
       window.history.pushState({}, "", target);

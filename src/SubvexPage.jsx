@@ -1,7 +1,7 @@
 import { motion as Motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import mxLogo from "./assets/mx.png";
 import subvexLogo from "./assets/SubVex.png";
+import ScrollVideoHero from "./components/ScrollVideoHero";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -217,14 +217,8 @@ export default function SubvexPage({ lang, setLang }) {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#02040a] text-[#eaf0ff] selection:bg-[#2d4f87]/45">
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_95%_at_12%_6%,rgba(96,140,214,0.14),transparent_58%),radial-gradient(95%_80%_at_88%_92%,rgba(63,94,148,0.12),transparent_60%),linear-gradient(168deg,#010205_0%,#050b18_54%,#060f1e_100%)]" />
-        <div className="absolute inset-0 opacity-[0.045] [background-image:radial-gradient(rgba(255,255,255,0.9)_0.55px,transparent_0.55px)] [background-size:3px_3px]" />
-      </div>
-
-      <div className="pointer-events-none fixed inset-0 z-[1] flex items-center justify-center">
-        <img src={mxLogo} alt="MAIX" className="w-[80vw] max-w-none -translate-y-6 opacity-[0.055]" />
-      </div>
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(120%_95%_at_12%_6%,rgba(96,140,214,0.12),transparent_58%),radial-gradient(95%_80%_at_88%_92%,rgba(63,94,148,0.1),transparent_60%),linear-gradient(168deg,#010205_0%,#050b18_54%,#060f1e_100%)]" />
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.035] [background-image:radial-gradient(rgba(255,255,255,0.9)_0.55px,transparent_0.55px)] [background-size:3px_3px]" />
 
       <header className="fixed inset-x-0 top-0 z-50">
         <div
@@ -254,44 +248,11 @@ export default function SubvexPage({ lang, setLang }) {
       </header>
 
       <main className="relative z-10">
-        <section className="mx-auto max-w-7xl px-6 pb-24 pt-40 md:px-10 md:pb-32 md:pt-46">
-          <p className="mb-8 text-3xl font-black uppercase tracking-[0.14em] md:text-4xl">
-            <SubvexWord />
-          </p>
-          <Motion.h1
-            initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: reduce ? 0 : 1.05, ease: EASE }}
-            className="whitespace-pre-line text-5xl font-black uppercase leading-[1.08] tracking-[-0.01em] text-[#f2f6ff] md:text-7xl lg:text-8xl"
-          >
-            {content.hero.title}
-          </Motion.h1>
-
-          <Motion.p
-            initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: reduce ? 0 : 0.9, delay: 0.08, ease: EASE }}
-            className="mt-10 max-w-2xl text-base leading-relaxed text-[#dee8ff]/88 md:text-lg"
-          >
-            {content.hero.subtitle}
-          </Motion.p>
-
-          <Motion.a
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduce ? 0 : 0.82, delay: 0.14, ease: EASE }}
-            href="https://play.google.com/store/apps/details?id=com.maixinteractivedev.subvex"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-11 inline-flex rounded-full border border-[#89a6d9]/44 bg-[#1a2d51]/72 px-8 py-3 text-sm uppercase tracking-[0.18em] text-[#edf3ff] transition-colors duration-300 hover:border-[#a8bfe7]/60 hover:bg-[#243d69]/80"
-          >
-            {content.hero.cta}
-          </Motion.a>
-        </section>
+        <ScrollVideoHero title={content.hero.title.replace("\n", " ")} subtitle={content.hero.subtitle} />
 
         <Motion.section
-          initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: reduce ? 0 : 0.85, ease: EASE }}
           className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28"
@@ -318,8 +279,8 @@ export default function SubvexPage({ lang, setLang }) {
 
         <Motion.section
           id="features"
-          initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: reduce ? 0 : 0.85, ease: EASE }}
           className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28"
@@ -336,8 +297,8 @@ export default function SubvexPage({ lang, setLang }) {
         </Motion.section>
 
         <Motion.section
-          initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(5px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: reduce ? 0 : 0.8, ease: EASE }}
           className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28"
@@ -350,8 +311,8 @@ export default function SubvexPage({ lang, setLang }) {
 
         <Motion.section
           id="faq"
-          initial={reduce ? false : { opacity: 0, y: 20, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: reduce ? 0 : 0.85, ease: EASE }}
           className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28"

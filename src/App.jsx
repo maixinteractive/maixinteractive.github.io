@@ -6,6 +6,16 @@ import SubvexPage from "./SubvexPage";
 
 const BASE_URL = import.meta.env.BASE_URL || "/";
 const EASE = [0.22, 1, 0.36, 1];
+const LANG_STORAGE_KEY = "maix_lang";
+
+function getInitialLang() {
+  try {
+    const saved = window.localStorage.getItem(LANG_STORAGE_KEY);
+    return saved === "en" || saved === "tr" ? saved : "tr";
+  } catch {
+    return "tr";
+  }
+}
 
 const HOME_CONTENT = {
   tr: {
@@ -324,8 +334,8 @@ function HomePage({ lang, setLang }) {
         <section ref={heroRef} className="mx-auto max-w-7xl px-6 pb-32 pt-40 md:px-10 md:pb-40 md:pt-46">
           <Motion.div style={{ y: heroY }}>
             <Motion.h1
-              initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduce ? 0 : 1.05, ease: EASE }}
               className="whitespace-pre-line text-5xl font-black uppercase leading-[1.08] tracking-[-0.01em] text-[#f2f6ff] md:text-7xl lg:text-8xl"
             >
@@ -333,8 +343,8 @@ function HomePage({ lang, setLang }) {
             </Motion.h1>
 
             <Motion.p
-              initial={reduce ? false : { opacity: 0, y: 14, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: reduce ? 0 : 0.92, delay: 0.08, ease: EASE }}
               className="mt-10 max-w-2xl text-base leading-relaxed text-[#dee8ff]/88 md:text-lg"
             >
@@ -362,8 +372,8 @@ function HomePage({ lang, setLang }) {
         </section>
 
         <Motion.section
-          initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(5px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: reduce ? 0 : 0.82, ease: EASE }}
           className="mx-auto max-w-7xl px-6 pb-10 md:px-10 md:pb-14"
@@ -374,8 +384,8 @@ function HomePage({ lang, setLang }) {
 
         <Motion.section
           id="vision"
-          initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.42 }}
           transition={{ duration: reduce ? 0 : 0.88, ease: EASE }}
           className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-18 md:grid-cols-12 md:px-10 md:py-26"
@@ -386,8 +396,8 @@ function HomePage({ lang, setLang }) {
 
         <Motion.section
           id="products"
-          initial={reduce ? false : { opacity: 0, y: 22, filter: "blur(6px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={reduce ? false : { opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.34 }}
           transition={{ duration: reduce ? 0 : 0.9, ease: EASE }}
           className="mx-auto max-w-7xl px-6 py-18 md:px-10 md:py-26"
@@ -479,8 +489,8 @@ function HomePage({ lang, setLang }) {
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/78 p-4 backdrop-blur-md"
           >
             <Motion.div
-              initial={reduce ? false : { opacity: 0, y: 16, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
               transition={{ duration: reduce ? 0 : 0.8, ease: EASE }}
               className="max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-[#7c95c5]/22 bg-[#081022]"
@@ -516,8 +526,16 @@ function HomePage({ lang, setLang }) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState("tr");
+  const [lang, setLang] = useState(() => getInitialLang());
   const [route, setRoute] = useState(() => getRoute());
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch {
+      // no-op
+    }
+  }, [lang]);
 
   useEffect(() => {
     const onPop = () => setRoute(getRoute());
